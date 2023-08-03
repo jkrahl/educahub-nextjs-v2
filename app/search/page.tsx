@@ -7,14 +7,32 @@ import IPost from '@/interfaces/Post'
 import styles from './page.module.css'
 import { useEffect, useState } from 'react'
 
-export default function Home() {
+
+export default function SearchResults() {
+    // Get query from URL
+    const urlParams = new URLSearchParams(window.location.search)
+    const query = urlParams.get('q')
+
+    if (!query) {
+        return (
+            <div className={styles.center}>
+                <h1>404</h1>
+                <p>No se encontró la página</p>
+            </div>
+        )
+    }
+
     const [postsData, setPostsData] = useState<IPost[]>([])
     const [loading, setLoading] = useState(true)
     const [empty, setEmpty] = useState(false)
 
     useEffect(() => {
         ;(async () => {
-            const res = await fetch('https://api.educahub.app/posts')
+            // URL encode query
+            const queryE = encodeURIComponent(urlParams.get('q') as string)
+            const res = await fetch(
+                `https://api.educahub.app/posts?q=` + queryE
+            )
             if (!res.ok) {
                 console.log('Error fetching posts')
                 return
@@ -42,7 +60,7 @@ export default function Home() {
                     marginTop: '4rem',
                 }}
             >
-                <h2 className={styles.title}>Recientes</h2>
+                <h2 className={styles.title}>Resultados de búsqueda</h2>
                 <PostsPanel posts={postsData} loading={loading} empty={empty} />
             </div>
         </main>
