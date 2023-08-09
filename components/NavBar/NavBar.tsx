@@ -30,7 +30,7 @@ export default function NavBar() {
     return (
         <Navbar expand="lg">
             <Container>
-                <Navbar.Brand href="/">
+                <Navbar.Brand href="/dashboard">
                     <Image
                         src="/logo.png"
                         alt="EducaHub"

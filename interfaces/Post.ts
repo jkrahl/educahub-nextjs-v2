@@ -3,6 +3,7 @@ export default interface IPost {
     title: string
     description?: string
     user: string
+    tags?: string[]
     url: string
     createdAt: string
     subject?: string
