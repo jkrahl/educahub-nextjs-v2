@@ -2,6 +2,7 @@
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import CommentsPanel from '@/components/CommentsPanel/CommentsPanel'
 import IPost from '@/interfaces/Post'
 import styles from './page.module.css'
 import { useEffect, useState } from 'react'
@@ -115,6 +116,12 @@ export default function PostView({ params }: { params: { postURL: string } }) {
                         )}
                     </div>
                 )}
+            </div>
+            <div className={styles.comments}>
+                <h4>
+                    <span>Comentarios</span>
+                </h4>
+                <CommentsPanel postURL={params.postURL} />
             </div>
         </main>
     )

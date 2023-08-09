@@ -7,5 +7,5 @@ npm run dev
 ```
 
 ### TO DO LIST
-* Comments in post page
+* Add Comments in post page
 * Likes in post page

@@ -27,6 +27,6 @@
     flex-direction: row;
 }
 
-#view-button {
-    margin-right: 10px;
+.comments {
+    margin: 40px 0;
 }
