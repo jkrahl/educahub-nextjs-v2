@@ -1,6 +1,7 @@
 'use client'
 import styles from './page.module.css'
 import Button from 'react-bootstrap/Button'
+import Link from 'next/link'
 
 export default function Home() {
     // If the user is logged in, redirect to dashboard
@@ -11,19 +12,19 @@ export default function Home() {
     return (
         <main className={styles.main}>
             <h1 className={styles.title}>EducaHub</h1>
-                <a href="/login">
+                <Link href="/login">
                     <Button variant="primary" href="/login">
                         Login
                     </Button>
-                </a>{' '}
-                <a href="/register">
+                </Link>{' '}
+                <Link href="/register">
                     {' '}
                     <Button variant="primary" href="/register">
                         Register
                     </Button>
-                </a>
+                </Link>
                 <br />
-            <a href="/dashboard">Continuar sin iniciar sesión</a>
+            <Link href="/dashboard">Continuar sin iniciar sesión</Link>
         </main>
     )
 }

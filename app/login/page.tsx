@@ -4,6 +4,7 @@ import type { FormEvent } from 'react'
 import Alert from 'react-bootstrap/Alert'
 import Form from 'react-bootstrap/Form'
 import { useState } from 'react'
+import Link from 'next/link'
 
 export default function Login() {
     const [email, setEmail] = useState('')
@@ -58,10 +59,10 @@ export default function Login() {
                     Iniciar sesión
                 </Button>
                 &nbsp;
-                <a href="/recovery">
+                <Link href="/recovery">
                     {' '}
                     <Button variant="secondary">Olvidé mi contraseña</Button>
-                </a>
+                </Link>
             </Form>
         </>
     )

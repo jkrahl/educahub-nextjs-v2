@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
@@ -7,26 +8,26 @@ import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import './NavBar.css'
 
-function getUsername() {
-    // Get username from JWT
-    const token = localStorage.getItem('token')
-
-    if (!token) {
-        return null
-    }
-    const payload = token.split('.')[1]
-    const decodedPayload = Buffer.from(payload, 'base64').toString('utf-8')
-    const { username } = JSON.parse(decodedPayload)
-    return username
-}
-
 function logout() {
     localStorage.removeItem('token')
     window.location.href = '/'
 }
 
 export default function NavBar() {
-    const username = getUsername()
+    const [username, setUsername] = useState<string>('')
+
+    useEffect(() => {
+        // Get username from JWT
+        const token = localStorage.getItem('token')
+        if (!token) {
+            return
+        }
+        const payload = token.split('.')[1]
+        const decodedPayload = Buffer.from(payload, 'base64').toString('utf-8')
+        const { username } = JSON.parse(decodedPayload)
+        setUsername(username)
+    }, [])
+
     return (
         <Navbar expand="lg">
             <Container>
@@ -59,15 +60,12 @@ export default function NavBar() {
                         </Nav.Link>
                         {username ? (
                             <>
-                                <NavDropdown title={username} id="basic-nav-dropdown" style={{color: "black"}}>
-                                    <NavDropdown.Item href={"u/"+username}>
-                                    <Person /> Mi perfil
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item href="" onClick={logout}>
-                                        Cerrar sesión
-                                    </NavDropdown.Item>
-                                </NavDropdown>
+                                <Nav.Link href={'u/' + username} className="text-body">
+                                    <Person /> {username}
+                                </Nav.Link>
+                                <Nav.Link href="" onClick={logout} className="text-body">
+                                    Cerrar sesión
+                                </Nav.Link>
                             </>
                         ) : (
                             <>

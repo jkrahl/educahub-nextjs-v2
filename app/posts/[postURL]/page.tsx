@@ -6,6 +6,7 @@ import CommentsPanel from '@/components/CommentsPanel/CommentsPanel'
 import IPost from '@/interfaces/Post'
 import styles from './page.module.css'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 export default function PostView({ params }: { params: { postURL: string } }) {
     const [postData, setPostData] = useState<IPost | undefined>(undefined)
@@ -57,9 +58,9 @@ export default function PostView({ params }: { params: { postURL: string } }) {
                         <div id="key-data" className={styles.alignText}>
                             <span>
                                 by{' '}
-                                <a href={'/u/' + postData?.user}>
+                                <Link href={'/u/' + postData?.user}>
                                     u/{postData?.user}
-                                </a>
+                                </Link>
                                 {' · '}
                                 {postData &&
                                     new Date(
