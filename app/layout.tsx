@@ -1,3 +1,4 @@
+import { UserProvider } from '@auth0/nextjs-auth0/client'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './globals.css'
 import NavBar from '@/components/NavBar/NavBar'
@@ -15,10 +16,12 @@ export default function RootLayout({
 }) {
     return (
         <html lang="es">
-            <body>
-            <NavBar />
-                <div className="container">{children}</div>
-            </body>
+            <UserProvider>
+                <body>
+                    <NavBar />
+                    <div className="container">{children}</div>
+                </body>
+            </UserProvider>
         </html>
     )
 }

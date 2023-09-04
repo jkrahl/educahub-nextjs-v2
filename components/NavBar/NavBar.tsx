@@ -1,32 +1,13 @@
 'use client'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useUser } from '@auth0/nextjs-auth0/client'
 import Image from 'next/image'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
-import NavDropdown from 'react-bootstrap/NavDropdown'
 import './NavBar.css'
 
-function logout() {
-    localStorage.removeItem('token')
-    window.location.href = '/'
-}
-
 export default function NavBar() {
-    const [username, setUsername] = useState<string>('')
-
-    useEffect(() => {
-        // Get username from JWT
-        const token = localStorage.getItem('token')
-        if (!token) {
-            return
-        }
-        const payload = token.split('.')[1]
-        const decodedPayload = Buffer.from(payload, 'base64').toString('utf-8')
-        const { username } = JSON.parse(decodedPayload)
-        setUsername(username)
-    }, [])
+    const { user, error, isLoading } = useUser()
 
     return (
         <Navbar expand="lg">
@@ -58,25 +39,26 @@ export default function NavBar() {
                         <Nav.Link href="/subjects" className="text-body">
                             Asignaturas
                         </Nav.Link>
-                        {username ? (
+                        {isLoading ? (
+                            <Nav.Link href="/dashboard" className="text-body">
+                                Cargando...
+                            </Nav.Link>
+                        ) : user ? (
                             <>
-                                <Nav.Link href={'u/' + username} className="text-body">
-                                    <Person /> {username}
+                                <Nav.Link href={'u/'} className="text-body">
+                                    <Person /> {user.name}
                                 </Nav.Link>
-                                <Nav.Link href="" onClick={logout} className="text-body">
+                                <Nav.Link
+                                    href="/api/auth/logout"
+                                    className="text-body"
+                                >
                                     Cerrar sesión
                                 </Nav.Link>
                             </>
                         ) : (
                             <>
-                                <Nav.Link href="/login" className="text-body">
-                                    Iniciar sesión
-                                </Nav.Link>
-                                <Nav.Link
-                                    href="/register"
-                                    className="text-body"
-                                >
-                                    Registrarse
+                                <Nav.Link href="/api/auth/login" className="text-body">
+                                    Iniciar sesión / Registrarse
                                 </Nav.Link>
                             </>
                         )}
